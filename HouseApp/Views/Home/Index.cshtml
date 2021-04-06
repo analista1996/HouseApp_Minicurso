@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    var partialresume_ = ViewData["pay"] as HouseModel.Models.Resume_.Resume;
+    var list = ViewData["lista"];
+}
+<link href="~/css/site.css" rel="stylesheet" />
+<div class="text-center" ng-controller="housectrl" ng-app="houseapp">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <div class="w-50  bg-info">
+
+        <div>
+            <p>Metodos De Pagamento Usados</p>
+            <hr />
+            <h3 style="color:white" ng-repeat="pay in resume['p_used']">
+
+                {{pay}} <br />
+            </h3>
+        </div>
+        <div>
+            <label>
+                Valor Inicial:
+            </label>
+            <h3 style="color:white;">{{resume['i_Budget'] | currency}}</h3>
+        </div>
+        <div>
+            <label>Total Gastos</label>
+            <h3 style="color:white">
+            {{resume['total_Spends'] | currency}}
+            </h3>
+        </div>
+        <div>
+            <label>Valor Restante</label>
+            <h3 style="color:white">
+                {{resume['f_Budget'] | currency}}
+            </h3>
+        </div>
+        <div>
+            @if (partialresume_.F_Budget > 0)
+            {
+                <label class="bg-success">Voce esta em credito!</label>
+            }
+            else
+            {
+                <label class="bg-danger">Voce atigil seu Budget, nao gaste mais...</label>
+            }
+        </div>
+       
+    </div>
+</div>
+<script type="text/javascript">
+    angular.module("houseapp", []);
+    angular.module("houseapp").controller("housectrl", function ($scope)
+    {
+        $scope.app = "houseapp";
+        $scope.resume = @Html.Raw(Json.Serialize(partialresume_));
+
+    });
+
+</script>
